@@ -1,13 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function PlanetsListItem(props) {
   const { planet } = props;
 
   const [firstFilm, setFirstFilm] = useState('')
+  // console.log("Planet", planet);
+  const filmsApiURL = planet.films[0]
+  useEffect(() => {
+        fetch(filmsApiURL)
+        .then(res => res.json())
+        .then(data => setFirstFilm(data.title))
+    }, [planet])
 
-  console.log("Planet", planet);
-
-  return <li>{planet.name} - First Film {firstFilm}</li>;
+  return <li>{planet.name} - First Film: {firstFilm}</li>;
 }
 
 export default PlanetsListItem;
